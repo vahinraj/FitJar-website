@@ -11,3 +11,38 @@
 @media(max-width:560px){.glass-nav{padding:7px 7px 7px 13px}.brand{font-size:19px}.brand-mark{width:29px;height:29px;font-size:19px}.nav-cta{font-size:11px;padding:11px}.hero h1{font-size:51px}.hero-lede{font-size:15px}.hero-actions{gap:15px}.hero-stage{height:500px;transform:scale(.72);transform-origin:top center;margin-bottom:-100px}.floating-chip.chip-one{left:-46px}.floating-chip.chip-two{right:-53px}.statement{padding-top:95px;padding-bottom:100px}.statement h2,.section-head h2{font-size:46px}.statement p{font-size:15px}.story h2{font-size:41px}.feature-art{min-height:360px}.training-bars{inset:75px 35px 65px}.body-art-label.left{left:3%}.body-art-label.right{right:3%}.plans{padding-top:100px}.values-panel{padding:40px 24px}.values h2{font-size:42px}.footer-top,.footer-bottom{display:block}.footer-links{grid-template-columns:1fr 1fr;gap:35px}.footer-bottom span{display:block;margin-bottom:9px}.page-hero h1{font-size:48px}.support-grid{grid-template-columns:1fr}.legal-layout{padding-bottom:75px}}
 .hero-leaf{position:absolute;z-index:1;width:58px;height:27px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#a3eb73,#2c7c4b 75%);box-shadow:inset 0 1px 10px #eaffb06b,0 0 22px #76e67744;opacity:.68;animation:leafDrift 9s ease-in-out infinite;pointer-events:none}.hero-leaf::after{content:"";position:absolute;left:10px;top:14px;width:41px;height:1px;background:#d2ffb287;transform:rotate(-17deg)}.leaf-a{top:70px;right:65px;transform:rotate(-30deg);animation-delay:-2s}.leaf-b{bottom:155px;left:15px;width:39px;height:20px;opacity:.45;transform:rotate(110deg);animation-delay:-5s}.leaf-c{bottom:42px;right:90px;width:34px;height:17px;opacity:.35;transform:rotate(25deg);animation-delay:-7s}@keyframes leafDrift{50%{translate:12px -18px;rotate:11deg}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+/* Responsive polish: keep the phone and full model inside narrow viewports. */
+@media(min-width:801px){
+  .nav-links{gap:8px}
+  .nav-links a{padding-inline:14px}
+}
+@keyframes phoneFloatMobile{50%{transform:rotateY(-6deg) rotateX(2deg) scale(.78) translateY(-10px)}}
+@media(max-width:560px){
+  body{overflow-x:hidden}
+  .site-header{padding-inline:12px}
+  .glass-nav{width:100%;gap:9px;padding-left:12px;padding-right:7px}
+  .nav-links{top:68px;gap:6px;padding:10px}
+  .nav-links a{padding:14px 16px;border-radius:12px}
+  .nav-cta{margin-left:auto;padding-inline:12px}
+  .hero{padding-top:142px;padding-bottom:82px}
+  .hero-stage{height:650px;transform:none;margin-top:22px;margin-bottom:0;overflow:visible}
+  .phone-shell{transform:rotateY(-7deg) rotateX(2deg) scale(.78);animation:phoneFloatMobile 7s ease-in-out infinite}
+  .floating-chip{min-width:138px;padding:11px 12px}
+  .chip-one{left:-18px;top:120px}
+  .chip-two{right:-18px;bottom:110px}
+  .body-modal{padding:12px}
+  .body-modal-panel{width:min(620px,100%);height:min(720px,calc(100svh - 24px));min-height:0;overflow:auto;padding:38px 18px 22px;border-radius:24px}
+  .body-modal-stage{height:min(58svh,500px);min-height:330px}
+  .body-modal-panel h2{font-size:30px}
+  .body-modal-panel p{font-size:14px}
+  .body-modal-panel .body-switcher{gap:8px}
+  .body-modal-panel .body-switch{padding:9px 16px}
+}
+@media(max-width:800px){
+  .nav-links{display:flex;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .28s ease,transform .32s cubic-bezier(.2,.8,.2,1),visibility .28s;}
+  .nav-links.open{opacity:1;visibility:visible;transform:translateY(0)}
+  .menu-toggle span{transition:transform .28s ease,opacity .2s ease}
+  .menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+  .menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+}
