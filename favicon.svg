@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="17" fill="#07120d"/><path d="M22 48V17h24v6H29v8h14v6H29v11z" fill="#e9f6e6"/><path d="M44 44c-8 0-12-5-12-10 7-1 12 2 12 10z" fill="#8cec78"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="surface" x1="80" y1="48" x2="430" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18232d"/>
+      <stop offset="1" stop-color="#0b1117"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="286" y1="230" x2="365" y2="310" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a5f58a"/>
+      <stop offset="1" stop-color="#46bf5a"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="14" width="484" height="484" rx="142" fill="url(#surface)"/>
+  <rect x="128" y="182" width="256" height="236" rx="68" fill="none" stroke="#f4f2eb" stroke-width="26"/>
+  <rect x="176" y="112" width="160" height="42" rx="21" fill="#f4f2eb"/>
+  <path d="M199 229h116v28h-82v43h72v28h-72v75h-34V229Z" fill="#f4f2eb"/>
+  <path d="M285 285c22-43 54-58 91-53 0 39-20 69-67 69h-25Z" fill="url(#leaf)"/>
+</svg>

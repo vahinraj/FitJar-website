@@ -46,3 +46,16 @@
   .menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
   .menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
 }
+
+/* Use the supplied FitJar mark as a clean squircle without the old black frame. */
+.brand-mark{
+  overflow:hidden;
+  border:0;
+  background:#101820 url('/favicon.svg') center/cover no-repeat;
+  color:transparent;
+  box-shadow:0 5px 16px rgba(0,0,0,.2);
+}
+.brand-mark .brand-leaf{display:none}
+
+/* Text-only brand treatment requested for the website navigation and footer. */
+.brand-mark{display:none}
