@@ -43,12 +43,17 @@
 
   const sliceSequence = document.querySelector('[data-slice-sequence]');
   if (sliceSequence && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const leftPanel = sliceSequence.querySelector('.slice-panel-left');
-    const rightPanel = sliceSequence.querySelector('.slice-panel-right');
-    const firstBlade = sliceSequence.querySelector('.slice-blade-one');
-    const secondBlade = sliceSequence.querySelector('.slice-blade-two');
+    const panels = {
+      top: sliceSequence.querySelector('.slice-panel-top'),
+      right: sliceSequence.querySelector('.slice-panel-right'),
+      bottom: sliceSequence.querySelector('.slice-panel-bottom'),
+      left: sliceSequence.querySelector('.slice-panel-left'),
+    };
+    const firstBlade = sliceSequence.querySelector('.x-blade-a');
+    const secondBlade = sliceSequence.querySelector('.x-blade-b');
+    const flash = sliceSequence.querySelector('.x-flash');
     const scrollHint = sliceSequence.querySelector('.slice-scroll-hint');
-    const clamp = (value) => Math.max(0, Math.min(1, value));
+    const clamp = value => Math.max(0, Math.min(1, value));
     const smooth = (start, end, value) => {
       const t = clamp((value - start) / (end - start));
       return t * t * (3 - 2 * t);
@@ -62,21 +67,25 @@
       return clamp(-sliceSequence.getBoundingClientRect().top / distance);
     };
     const renderSlice = () => {
-      const split = smooth(0.23, 0.82, current);
-      const firstCut = smooth(0.02, 0.48, current);
-      const secondCut = smooth(0.16, 0.62, current);
-      leftPanel.style.transform = `translate3d(${-110 * split}%, 0, 0)`;
-      rightPanel.style.transform = `translate3d(${110 * split}%, 0, 0)`;
-      firstBlade.style.transform = `translate3d(${-30 + 170 * firstCut}vw, 0, 0) rotate(13deg)`;
-      secondBlade.style.transform = `translate3d(${30 - 170 * secondCut}vw, 0, 0) rotate(-13deg)`;
-      firstBlade.style.opacity = String(Math.sin(Math.PI * firstCut) * 0.9);
-      secondBlade.style.opacity = String(Math.sin(Math.PI * secondCut) * 0.9);
-      scrollHint.style.opacity = String(1 - smooth(0, 0.22, current));
+      const cut = smooth(0.03, 0.28, current);
+      const split = smooth(0.20, 0.78, current);
+      const bladeFade = 1 - smooth(0.48, 0.72, current);
+      const angle = Math.atan2(window.innerHeight, window.innerWidth) * 180 / Math.PI;
+      panels.top.style.transform = 'translate3d(0,' + (-112 * split) + '%,0)';
+      panels.right.style.transform = 'translate3d(' + (112 * split) + '%,0,0)';
+      panels.bottom.style.transform = 'translate3d(0,' + (112 * split) + '%,0)';
+      panels.left.style.transform = 'translate3d(' + (-112 * split) + '%,0,0)';
+      firstBlade.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg) scaleX(' + cut + ')';
+      secondBlade.style.transform = 'translate(-50%,-50%) rotate(' + (-angle) + 'deg) scaleX(' + cut + ')';
+      firstBlade.style.opacity = String(cut * bladeFade);
+      secondBlade.style.opacity = String(cut * bladeFade);
+      flash.style.opacity = String(Math.sin(Math.PI * smooth(0.12, 0.52, current)) * 0.55);
+      scrollHint.style.opacity = String(1 - smooth(0, 0.20, current));
     };
     const animateSlice = () => {
       frame = 0;
       const difference = target - current;
-      current = Math.abs(difference) < 0.001 ? target : current + difference * 0.22;
+      current = Math.abs(difference) < 0.001 ? target : current + difference * 0.26;
       renderSlice();
       if (current !== target) frame = window.requestAnimationFrame(animateSlice);
     };

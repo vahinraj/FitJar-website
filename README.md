@@ -1,21 +1,40 @@
 # FitJar website
 
-This is the standalone FitJar marketing and legal website. It uses static HTML, CSS, and JavaScript. The homepage opens with a scroll-driven brand reveal using the supplied FitJar mark and branding screen, followed by an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
+This is the standalone FitJar marketing and legal website. The homepage opens with a scroll-driven X cut through the supplied FitJar branding screen, revealing the athlete hero. The page also includes an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
 
 ## Preview locally
 
-From this folder, run `node scripts/preview.mjs` and open `http://127.0.0.1:4173`. Run `node scripts/check-site.mjs` to check JavaScript syntax, internal links, and page metadata.
+From this directory, run `node scripts/preview.mjs` and open `http://127.0.0.1:4173` in a browser. Run `node scripts/check-site.mjs` to check JavaScript syntax, internal links, and page metadata. Review the X cut and page layout at desktop and phone widths.
 
-## Update the existing GitHub and Vercel site
+## Publish updates to the existing site
 
-The live website is connected to the separate repository [vahinraj/FitJar-website](https://github.com/vahinraj/FitJar-website) and the Vercel project `fit-jar-website` in the `fit-jar` team. This folder is inside the Expo app workspace, so copy its **contents** into the website repository root. Do not push the parent Expo app as the website.
+The website lives in the separate GitHub repository [vahinraj/FitJar-website](https://github.com/vahinraj/FitJar-website), connected to Vercel project `fit-jar-website` in the `fit-jar` team. This directory is inside the Expo app workspace. Copy its **contents** into the website repository root; the parent Expo app is a different project.
 
-1. Clone or open the website repository and check that its remote is `https://github.com/vahinraj/FitJar-website.git`.
-2. Copy every file and folder from this `fitjar_website` directory into the root of that checkout. Include `index.html`, `styles.css`, `editorial.css`, `site.js`, `hero-athlete.webp`, `brand-mark.png`, `brand-screen.png`, and all support and legal routes. Do not copy `node_modules` or any `.env` file.
-3. From the website checkout, run `node scripts/check-site.mjs`. Preview it with `node scripts/preview.mjs`. Review the homepage at desktop and mobile widths, including the scroll reveal, navigation, and 3D body preview.
-4. Run `git status` and `git diff`. Then run `git add .`, `git commit -m "Add FitJar brand scroll reveal"`, and `git push origin main`. Confirm `main` is still the production branch under **Vercel → fit-jar-website → Settings → Environments → Production → Branch Tracking**.
-5. Open **Vercel → fit-jar-website → Deployments**. Wait for the deployment associated with your commit to become **Ready** and confirm it is **Production**. The existing production domain updates automatically; do not create a new Vercel project.
-6. Open the production URL and review the homepage, slice transition, mobile layout, and support, privacy, terms, health disclaimer, account deletion, and model attribution routes. If the previous design appears, refresh without cache and confirm the latest Ready deployment is assigned to production.
+1. In Vercel, open **fit-jar-website → Settings → Git** and confirm the connected repository is `vahinraj/FitJar-website`. Under **Settings → Environments → Production → Branch Tracking**, confirm the production branch is `main`. Under **Settings → General**, confirm the Root Directory points to the repository root.
+2. Open PowerShell. If you have not cloned the website repository, run:
+   ```powershell
+   cd C:\Users\sirim
+   git clone https://github.com/vahinraj/FitJar-website.git
+   ```
+   If `C:\Users\sirim\FitJar-website` already exists, run `git -C C:\Users\sirim\FitJar-website pull origin main` instead.
+3. Copy the updated website files into that checkout:
+   ```powershell
+   robocopy "C:\Users\sirim\myApp\fitjar_website" "C:\Users\sirim\FitJar-website" /E
+   ```
+   Include the new `brand-mark.png`, `brand-screen.png`, `editorial.css`, `site.js`, and all pages. Do not copy the parent Expo app or any `.env` file.
+4. Review and publish the checkout:
+   ```powershell
+   cd C:\Users\sirim\FitJar-website
+   node scripts/check-site.mjs
+   git status
+   git add -A
+   git commit -m "Refine FitJar X reveal and page motion"
+   git push origin main
+   ```
+   Git may open a browser sign-in flow. Sign in with the GitHub account that can write to `vahinraj/FitJar-website`.
+5. Open **Vercel → fit-jar-website → Deployments**. Find the deployment for that commit. Wait until it is **Ready** and confirm the environment is **Production**. A push to the production branch updates the existing production domain automatically.
+6. Open the production URL. Scroll through the X cut in both directions, check that every hero button is visible on a short laptop screen, inspect the three plan cards, and check phone widths. Visit the support, privacy, terms, health disclaimer, account deletion, and model attribution pages too.
+7. If no deployment starts, check the repository connection under **Settings → Git**. Vercel also provides **Deployments → Create Deployment** to deploy the latest `main` commit from the existing project. If an old page appears, refresh without cache and confirm the latest Ready deployment is assigned to Production.
 
 ## Launch notes
 
