@@ -54,6 +54,8 @@
       bottom: sliceSequence.querySelector('.slice-panel-bottom'),
       left: sliceSequence.querySelector('.slice-panel-left'),
     };
+    const firstEdges = sliceSequence.querySelectorAll('.slice-edge-first');
+    const secondEdges = sliceSequence.querySelectorAll('.slice-panel .slice-edge-second');
     const scrollHint = sliceSequence.querySelector('.slice-scroll-hint');
     const clamp = value => Math.max(0, Math.min(1, value));
     const mix = (start, end, amount) => start + (end - start) * amount;
@@ -97,6 +99,17 @@
       move(panels.right, mix(upperX, width * 1.2, secondCut), mix(upperY, 0, secondCut));
       move(panels.bottom, mix(lowerX, 0, secondCut), mix(lowerY, height * 1.2, secondCut));
       move(panels.left, mix(lowerX, -width * 1.2, secondCut), mix(lowerY, 0, secondCut));
+
+      const firstGlow = smooth(0.12, 0.16, current) * (1 - smooth(0.29, 0.51, current));
+      const secondGlow = smooth(0.43, 0.48, current) * (1 - smooth(0.59, 0.72, current));
+      firstEdges.forEach(edge => {
+        edge.style.strokeDashoffset = String(100 * (1 - smooth(0.12, 0.27, current)));
+        edge.style.opacity = String(firstGlow);
+      });
+      secondEdges.forEach(edge => {
+        edge.style.strokeDashoffset = String(100 * (1 - smooth(0.43, 0.58, current)));
+        edge.style.opacity = String(secondGlow);
+      });
       scrollHint.style.opacity = String(1 - smooth(0, 0.16, current));
     };
     const animateSlice = () => {

@@ -88,6 +88,9 @@
 .slice-panel-bottom{clip-path:polygon(0 100%,100% 100%,50% 50%)}
 .slice-panel-left{clip-path:polygon(0 0,50% 50%,0 100%)}
 .slice-brand-art{width:100%;height:100%;display:grid;place-items:center}
+.slice-edge{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
+.slice-edge path{fill:none;stroke:#d7ff8a;stroke-width:1.25px;vector-effect:non-scaling-stroke;stroke-dasharray:100;stroke-dashoffset:100;opacity:0;filter:drop-shadow(0 0 3px #b9fb19) drop-shadow(0 0 7px #b9fb1966)}
+.slice-half .slice-edge-second{display:none}
 .slice-brand-screen{display:block;width:min(100%,1420px);max-height:100%;object-fit:contain}
 .slice-brand-mobile{display:none}
 .slice-ready .slice-scroll-hint{position:absolute;z-index:8;bottom:30px;left:50%;display:flex;align-items:center;gap:17px;transform:translateX(-50%);color:#e9eee3;font-size:10px;font-weight:800;letter-spacing:.18em;white-space:nowrap;pointer-events:none}
