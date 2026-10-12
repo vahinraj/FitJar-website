@@ -58,6 +58,10 @@
       first: sliceSequence.querySelector('.slice-blade-first'),
       second: sliceSequence.querySelector('.slice-blade-second'),
     };
+    const bladeReveals = {
+      first: sliceSequence.querySelector('.blade-reveal-first'),
+      second: sliceSequence.querySelector('.blade-reveal-second'),
+    };
     const scrollHint = sliceSequence.querySelector('.slice-scroll-hint');
     const clamp = value => Math.max(0, Math.min(1, value));
     const mix = (start, end, amount) => start + (end - start) * amount;
@@ -102,15 +106,14 @@
       move(panels.bottom, mix(lowerX, 0, secondCut), mix(lowerY, height * 1.2, secondCut));
       move(panels.left, mix(lowerX, -width * 1.2, secondCut), mix(lowerY, 0, secondCut));
 
-      const sweepBlade = (blade, start, end, fadeStart, fadeEnd) => {
+      const sweepBlade = (blade, reveal, reverse, start, end, fadeStart, fadeEnd) => {
         const travel = smooth(start, end, current);
         blade.style.opacity = String(smooth(start, start + 0.035, current) * (1 - smooth(fadeStart, fadeEnd, current)));
-        blade.querySelectorAll('path').forEach(path => {
-          path.style.strokeDashoffset = String(28 - 128 * travel);
-        });
+        reveal.setAttribute('width', String(100 * travel));
+        if (reverse) reveal.setAttribute('x', String(100 * (1 - travel)));
       };
-      sweepBlade(blades.first, 0.09, 0.30, 0.23, 0.31);
-      sweepBlade(blades.second, 0.40, 0.64, 0.56, 0.65);
+      sweepBlade(blades.first, bladeReveals.first, false, 0.09, 0.30, 0.23, 0.31);
+      sweepBlade(blades.second, bladeReveals.second, true, 0.40, 0.64, 0.56, 0.65);
       scrollHint.style.opacity = String(1 - smooth(0, 0.16, current));
     };
     const animateSlice = () => {
