@@ -81,10 +81,10 @@
       return clamp(-sliceSequence.getBoundingClientRect().top / distance);
     };
     const renderSlice = () => {
-      const firstCut = smooth(0.12, 0.30, current);
-      const secondCut = smooth(0.43, 0.72, current);
+      const firstCut = smooth(0.12, 0.34, current);
+      const secondCut = smooth(0.44, 0.77, current);
       const firstOpened = current >= 0.12;
-      const secondOpened = current >= 0.43;
+      const secondOpened = current >= 0.44;
       const width = window.innerWidth;
       const height = window.innerHeight;
       const upperX = width * 0.038 * firstCut;
@@ -109,11 +109,12 @@
       const sweepBlade = (blade, reveal, reverse, start, end, fadeStart, fadeEnd) => {
         const travel = smooth(start, end, current);
         blade.style.opacity = String(smooth(start, start + 0.035, current) * (1 - smooth(fadeStart, fadeEnd, current)));
-        reveal.setAttribute('width', String(100 * travel));
-        if (reverse) reveal.setAttribute('x', String(100 * (1 - travel)));
+        const head = reverse ? 100 - 109 * travel : 109 * travel;
+        reveal.setAttribute('x1', String(reverse ? head : head - 9));
+        reveal.setAttribute('x2', String(reverse ? head + 9 : head));
       };
-      sweepBlade(blades.first, bladeReveals.first, false, 0.09, 0.30, 0.23, 0.31);
-      sweepBlade(blades.second, bladeReveals.second, true, 0.40, 0.64, 0.56, 0.65);
+      sweepBlade(blades.first, bladeReveals.first, false, 0.07, 0.36, 0.27, 0.39);
+      sweepBlade(blades.second, bladeReveals.second, true, 0.41, 0.74, 0.64, 0.77);
       scrollHint.style.opacity = String(1 - smooth(0, 0.16, current));
     };
     const animateSlice = () => {

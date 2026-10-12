@@ -89,6 +89,7 @@
 .slice-panel-left{clip-path:polygon(0 0,50% 50%,0 100%)}
 .slice-brand-art{width:100%;height:100%;display:grid;place-items:center}
 .slice-ready .slice-blades{position:absolute;inset:0;z-index:7;display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+.slice-blades mask{mask-type:luminance}
 .slice-blade{opacity:0}
 .slice-blade path{fill:none;stroke-linecap:butt;vector-effect:non-scaling-stroke}
 .slice-blade .blade-halo{stroke:#b9fb19;stroke-width:30px;opacity:.65;filter:blur(12px)}
