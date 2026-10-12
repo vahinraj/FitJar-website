@@ -1,6 +1,6 @@
 # FitJar website
 
-This is the standalone FitJar marketing and legal website. The homepage opens with two sequential scroll-driven cuts through the supplied FitJar branding screen, with a brief lime glow along each moving cut edge before the athlete hero is revealed. The page also includes an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
+This is the standalone FitJar marketing and legal website. The homepage opens with two sequential scroll-driven cuts through the supplied FitJar branding screen, with a broad neon sweep for each cut before the athlete hero is revealed. The page also includes an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
 
 ## Preview locally
 
