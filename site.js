@@ -43,17 +43,23 @@
 
   const sliceSequence = document.querySelector('[data-slice-sequence]');
   if (sliceSequence && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const intact = sliceSequence.querySelector('.slice-intact');
+    const halves = {
+      upper: sliceSequence.querySelector('.slice-half-upper'),
+      lower: sliceSequence.querySelector('.slice-half-lower'),
+    };
     const panels = {
       top: sliceSequence.querySelector('.slice-panel-top'),
       right: sliceSequence.querySelector('.slice-panel-right'),
       bottom: sliceSequence.querySelector('.slice-panel-bottom'),
       left: sliceSequence.querySelector('.slice-panel-left'),
     };
-    const firstBlade = sliceSequence.querySelector('.x-blade-a');
-    const secondBlade = sliceSequence.querySelector('.x-blade-b');
-    const flash = sliceSequence.querySelector('.x-flash');
     const scrollHint = sliceSequence.querySelector('.slice-scroll-hint');
     const clamp = value => Math.max(0, Math.min(1, value));
+    const mix = (start, end, amount) => start + (end - start) * amount;
+    const move = (element, x, y) => {
+      element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
     const smooth = (start, end, value) => {
       const t = clamp((value - start) / (end - start));
       return t * t * (3 - 2 * t);
@@ -67,25 +73,36 @@
       return clamp(-sliceSequence.getBoundingClientRect().top / distance);
     };
     const renderSlice = () => {
-      const cut = smooth(0.03, 0.28, current);
-      const split = smooth(0.20, 0.78, current);
-      const bladeFade = 1 - smooth(0.48, 0.72, current);
-      const angle = Math.atan2(window.innerHeight, window.innerWidth) * 180 / Math.PI;
-      panels.top.style.transform = 'translate3d(0,' + (-112 * split) + '%,0)';
-      panels.right.style.transform = 'translate3d(' + (112 * split) + '%,0,0)';
-      panels.bottom.style.transform = 'translate3d(0,' + (112 * split) + '%,0)';
-      panels.left.style.transform = 'translate3d(' + (-112 * split) + '%,0,0)';
-      firstBlade.style.transform = 'translate(-50%,-50%) rotate(' + angle + 'deg) scaleX(' + cut + ')';
-      secondBlade.style.transform = 'translate(-50%,-50%) rotate(' + (-angle) + 'deg) scaleX(' + cut + ')';
-      firstBlade.style.opacity = String(cut * bladeFade);
-      secondBlade.style.opacity = String(cut * bladeFade);
-      flash.style.opacity = String(Math.sin(Math.PI * smooth(0.12, 0.52, current)) * 0.55);
-      scrollHint.style.opacity = String(1 - smooth(0, 0.20, current));
+      const firstCut = smooth(0.12, 0.30, current);
+      const secondCut = smooth(0.43, 0.72, current);
+      const firstOpened = current >= 0.12;
+      const secondOpened = current >= 0.43;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const upperX = width * 0.038 * firstCut;
+      const upperY = -height * 0.045 * firstCut;
+      const lowerX = -upperX;
+      const lowerY = -upperY;
+
+      intact.style.opacity = firstOpened ? '0' : '1';
+      halves.upper.style.opacity = firstOpened && !secondOpened ? '1' : '0';
+      halves.lower.style.opacity = firstOpened && !secondOpened ? '1' : '0';
+      move(halves.upper, upperX, upperY);
+      move(halves.lower, lowerX, lowerY);
+
+      Object.values(panels).forEach(panel => {
+        panel.style.opacity = secondOpened && secondCut < 1 ? '1' : '0';
+      });
+      move(panels.top, mix(upperX, 0, secondCut), mix(upperY, -height * 1.2, secondCut));
+      move(panels.right, mix(upperX, width * 1.2, secondCut), mix(upperY, 0, secondCut));
+      move(panels.bottom, mix(lowerX, 0, secondCut), mix(lowerY, height * 1.2, secondCut));
+      move(panels.left, mix(lowerX, -width * 1.2, secondCut), mix(lowerY, 0, secondCut));
+      scrollHint.style.opacity = String(1 - smooth(0, 0.16, current));
     };
     const animateSlice = () => {
       frame = 0;
       const difference = target - current;
-      current = Math.abs(difference) < 0.001 ? target : current + difference * 0.26;
+      current = Math.abs(difference) < 0.001 ? target : current + difference * 0.34;
       renderSlice();
       if (current !== target) frame = window.requestAnimationFrame(animateSlice);
     };

@@ -1,10 +1,10 @@
 # FitJar website
 
-This is the standalone FitJar marketing and legal website. The homepage opens with a scroll-driven X cut through the supplied FitJar branding screen, revealing the athlete hero. The page also includes an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
+This is the standalone FitJar marketing and legal website. The homepage opens with two sequential scroll-driven cuts through the supplied FitJar branding screen, revealing the athlete hero. The page also includes an interactive 3D body preview. Three.js loads from jsDelivr at runtime.
 
 ## Preview locally
 
-From this directory, run `node scripts/preview.mjs` and open `http://127.0.0.1:4173` in a browser. Run `node scripts/check-site.mjs` to check JavaScript syntax, internal links, and page metadata. Review the X cut and page layout at desktop and phone widths.
+From this directory, run `node scripts/preview.mjs` and open `http://127.0.0.1:4173` in a browser. Run `node scripts/check-site.mjs` to check JavaScript syntax, internal links, and page metadata. Review both image cuts and the page layout at desktop and phone widths.
 
 ## Publish updates to the existing site
 
@@ -28,12 +28,12 @@ The website lives in the separate GitHub repository [vahinraj/FitJar-website](ht
    node scripts/check-site.mjs
    git status
    git add -A
-   git commit -m "Refine FitJar X reveal and page motion"
+   git commit -m "Refine FitJar image-slice reveal"
    git push origin main
    ```
    Git may open a browser sign-in flow. Sign in with the GitHub account that can write to `vahinraj/FitJar-website`.
 5. Open **Vercel → fit-jar-website → Deployments**. Find the deployment for that commit. Wait until it is **Ready** and confirm the environment is **Production**. A push to the production branch updates the existing production domain automatically.
-6. Open the production URL. Scroll through the X cut in both directions, check that every hero button is visible on a short laptop screen, inspect the three plan cards, and check phone widths. Visit the support, privacy, terms, health disclaimer, account deletion, and model attribution pages too.
+6. Open the production URL. Scroll through both image cuts in both directions, check that every hero button is visible on a short laptop screen, inspect the three plan cards, and check phone widths. Visit the support, privacy, terms, health disclaimer, account deletion, and model attribution pages too.
 7. If no deployment starts, check the repository connection under **Settings → Git**. Vercel also provides **Deployments → Create Deployment** to deploy the latest `main` commit from the existing project. If an old page appears, refresh without cache and confirm the latest Ready deployment is assigned to Production.
 
 ## Launch notes
